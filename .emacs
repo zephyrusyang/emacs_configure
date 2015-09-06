@@ -40,6 +40,25 @@
 (setq auto-save-default nil)
 
 ;;#################################
+;; Setting For Windows Move
+;; http://www.emacswiki.org/emacs/WindMove
+;; http://d.hatena.ne.jp/mat_aki/20080421
+;; http://qiita.com/tadsan/items/114ffe6bb645551268dd
+;;#################################
+; windmove(for Mac/Linux)
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+; windmove(for windows)
+;(windmove-default-keybindings)
+;(global-set-key (quote [kp-8]) (quote windmove-up))
+;(global-set-key (quote [kp-2]) (quote windmove-down))
+;(global-set-key (quote [kp-6]) (quote windmove-right))
+;(global-set-key (quote [kp-4]) (quote windmove-left))
+
+
+;;#################################
 ;; Setting For Display
 ;;#################################
 
