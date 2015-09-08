@@ -22,7 +22,7 @@
 ;; (global-company-mode 1)
 (add-to-list 'load-path"~/.emacs.d/elpa/company-0.8.12")
 (require 'company)
-(global-company-mode)
+;;(global-company-mode)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 2)
 (setq company-selection-wrap-around t)
@@ -61,7 +61,6 @@
 ;;#################################
 ;; Setting For Display
 ;;#################################
-
 ;;バッファをウィンドウに固定するマイナーモード
 (defvar sticky-buffer-previous-header-line-format)
 (define-minor-mode sticky-buffer-mode
@@ -122,30 +121,21 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 
-;; company.el's setting, starting with ctrl+tab
-(add-hook 'c-mode-hook
-	  '(lambda()
-	     (setq indent-tabs-mode nil)
-	     (setq indent-level 4)
-	     (setq tab-width 4)
-	     ;; flyspell-prog-modeをオンにする
-	     (flyspell-prog-mode)
-	     (company-mode)
-	     ))
-(add-hook 'c++-mode-hook
-	  '(lambda()
-	     (setq indent-tabs-mode nil)
-	     (setq indent-level 4)
-	     (setq tab-width 4)
-	     (company-mode)
-	     ))
-(add-hook 'python-mode-hook
-	  '(lambda()
-	     (setq indent-tabs-mode nil)
-	     (setq indent-level 4)
-	     (setq python-indent 4)
-	     (setq tab-width 4)
-	     ))
+(defun my-code-editor-init()
+     (setq indent-tabs-mode nil)
+     (setq indent-level 4)
+     (setq tab-width 4)
+     ;; flyspell-prog-modeをオンにする
+     (flyspell-prog-mode)
+     ;; company-modeをオンにする
+     (company-mode)  
+)
+
+;; setting for c/c++/python mode
+(add-hook 'c-mode-hook 'my-code-editor-init)
+(add-hook 'c++-mode-hook 'my-code-editor-init)
+(add-hook 'python-mode-hook 'my-code-editor-init)
+(add-hook 'emacs-lisp-mode-hook 'my-code-editor-init)
 
 
 ;;#################################
@@ -164,81 +154,3 @@
 ;;C-c C-zでshellコマンドを呼び出す
 (define-key mode-specific-map "\C-z" 'shell-command)
 
-
-
-;; from http://ppgunjack.iteye.com/blog/1179657
-;(defadvice gdb-frame-handler-1 (after activate)
-;  (if gdb-use-separate-io-buffer
-;      (advice_separate_io)
-;   (advice_no_separate_io)
-;  )
-;)
-;
-;(defun advice_no_separate_io()
-;  (if (not (gdb-get-buffer 'gdb-assembler-buffer))
-;      (progn
-;	(shrink-window-horizontally ( / (window-width) 3))
-;
-;	(other-window 1)
-;	(split-window-horizontally)
-;
-;	(other-window 1)
-;	(gdb-set-window-buff (gdb-stack-buffer-name))
-;
-;	(other-window 1)
-;	(split-window-horizontally)
-;
-;	(other-window 1)
-;	(gdb-set-window-buff (gdb-get-buffer-create 'gdb-assembler-buffer))
-;	
-;	(shrink-window-horizontally ( / ((* (window-width) 2) 3))
-;
-;	(other-window 1)
-;	(gdb-set-window-buff (gdb-get-buffer-create 'gdb-registers-buffer))
-;
-;	(other-window 1)
-;	(toggle-current-windows-dedication)
-;	(gdb-set-window-buff (gdb-get-buffer-create 'gdb-memory-buffer))
-;	(toggle-current-windows-dedication)
-;
-;	(other-window 2)
-;      )
-;  )
-;)
-;
-;(defun advice_separate_io()
-;  (if (not (gdb-get-buffer 'gdb-assembler-buffer))
-;      (progn
-;	(split-window-horizontally)
-;	(enlarge-window-horizontally ( / (window-width) 3))
-;	(other-window 1)
-;
-;	(gdb-set-window-buff (gdb-inferior-name))
-;
-;	(other-window 1)
-;	(split-window-horizontally)
-;
-;	(other-window 1)
-;	(gdb-set-window-buff (gdb-stack-buffer-name))
-;
-;	(other-window 1)
-;
-;	(other-window 1)
-;	(toggle-current-windows-dedication)
-;	(gdb-set-window-buff (gdb-get-buffer-create 'gdb-assembler-buffer))
-;	(toggle-current-windows-dedication)
-;	
-;	(shrink-window-horizontally ( / ((* (window-width) 2) 3))
-;
-;	(other-window 1)
-;	(gdb-set-window-buff (gdb-get-buffer-create 'gdb-registers-buffer))
-;
-;	(other-window 1)
-;	(toggle-current-windows-dedication)
-;	(gdb-set-window-buff (gdb-get-buffer-create 'gdb-memory-buffer))
-;	(toggle-current-windows-dedication)
-;
-;	(other-window 2)
-;      )
-;  )
-;)
