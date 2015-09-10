@@ -33,11 +33,25 @@
 ;;#################################
 ;; Common Setting
 ;;#################################
+;; Bellを無効化
+(setq visible-bell t)
+
+;; 起動画面を消す
+(setq inhibit-startup-message t)
+
+;; 列番号を表示する
+(setq column-number-mode t)
+
+;; 括弧を書くときにペアの括弧をハイライト表示（Jumoしない）
+(show-paren-mode t)
+(setq show-paren-style 'parentheses)
+
 ;; *.~とかのバッグアップファイルを作らない
 (setq make-backup-file nil)
 
 ;; .#*とかのバッグアップファイルを作らない
 (setq auto-save-default nil)
+
 
 ;;#################################
 ;; Setting For Windows Move
@@ -50,12 +64,6 @@
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
-; windmove(for windows)
-;(windmove-default-keybindings)
-;(global-set-key (quote [kp-8]) (quote windmove-up))
-;(global-set-key (quote [kp-2]) (quote windmove-down))
-;(global-set-key (quote [kp-6]) (quote windmove-right))
-;(global-set-key (quote [kp-4]) (quote windmove-left))
 
 
 ;;#################################
@@ -68,8 +76,8 @@
   nil " sticky" nil
   (if sticky-buffer-mode
       (progn
-	(set (make-local-variable 'sticky-buffer-previous-header-line-format) header-line-format)
-	(set-window-dedicated-p (selected-window) sticky-buffer-mode)
+        (set (make-local-variable 'sticky-buffer-previous-header-line-format) header-line-format)
+        (set-window-dedicated-p (selected-window) sticky-buffer-mode)
       )
     (set-window-dedicated-p (selected-window) sticky-buffer-mode)
     (set header-line-format sticky-buffer-previous-header-line-format)
@@ -82,7 +90,7 @@
   (interactive)
   (message
     (if (let (window (get-buffer-window (current-buffer)))
-	  (set-window-dedicated-p window (not (window-dedicated-p window)))
+	     (set-window-dedicated-p window (not (window-dedicated-p window)))
         )
        "Window '%s' is dedicated"
        "Window '%s' is normal"
@@ -91,6 +99,14 @@
   )
 )
 
+
+;;#################################
+;; Setting For Dired-Mode
+;;#################################
+(setq dired-recursive-copieds 'top)
+(setq dired-recursive-deletes 'top)
+
+
 ;;#################################
 ;; Setting For Debuger-Mode
 ;;#################################
@@ -98,6 +114,24 @@
 
 ;; Set mirror-mode sticky buffer for gud-mode
 (add-hook 'gud-mode-hook 'sticky-buffer-mode)
+
+;;#################################
+;; Setting For hippie-expand
+;;#################################
+(global-set-key [(meta ?/)] 'hippie-expand)
+(setq hippie-expand-try-functions-list
+      '(try-expand-dabbrev
+        try-expand-dabbrev-visible
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-expand-all-abbrevs
+        try-expand-list
+        try-expand-line
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol))
+
 
 ;;#################################
 ;; Setting For Dired-Mode
@@ -153,4 +187,7 @@
 (define-key mode-specific-map "c" 'compile)
 ;;C-c C-zでshellコマンドを呼び出す
 (define-key mode-specific-map "\C-z" 'shell-command)
+
+(put 'narrow-to-page 'disabled nil)
+
 
