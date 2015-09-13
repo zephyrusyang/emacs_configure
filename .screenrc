@@ -1,0 +1,20 @@
+# vi ~/.screenrc
+# Encofing
+defencoding utf-8
+
+# Prefix Key
+escape ^Zz
+
+# Delete sartt up screen
+startup_message off
+
+# Auto detach
+autodetach on
+
+# Logging
+log on
+deflog on
+logfile "/Users/YourName/screen/log/screen-%Y%m%d-%n.log"
+
+# Show data and screen list
+hardstatus alwayslastline "%{= rw} %H %{= wk}%-Lw%{= bw}%n%f* %t%{= wk}%+Lw %{= wk}%=%{= gk} %y/%m/%d %c "
