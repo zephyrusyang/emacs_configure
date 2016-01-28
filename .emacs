@@ -54,19 +54,6 @@
 
 
 ;;#################################
-;; Setting For Windows Move
-;; http://www.emacswiki.org/emacs/WindMove
-;; http://d.hatena.ne.jp/mat_aki/20080421
-;; http://qiita.com/tadsan/items/114ffe6bb645551268dd
-;;#################################
-; windmove(for Mac/Linux)
-(global-set-key (kbd "C-c <left>")  'windmove-left)
-(global-set-key (kbd "C-c <down>")  'windmove-down)
-(global-set-key (kbd "C-c <up>")    'windmove-up)
-(global-set-key (kbd "C-c <right>") 'windmove-right)
-
-
-;;#################################
 ;; Setting For Display
 ;;#################################
 ;;バッファをウィンドウに固定するマイナーモード
@@ -181,13 +168,37 @@
 ;;  (setq mac-command-modifier 'super)
 ;;  (setq mac-pass-control-to-system t))
 
-;;C-c aでanythingコマンドを呼び出す
-(define-key mode-specific-map "a" 'anything)
-;;C-c cでcompileコマンドを呼び出す
-(define-key mode-specific-map "c" 'compile)
-;;C-c C-zでshellコマンドを呼び出す
-(define-key mode-specific-map "\C-z" 'shell-command)
+; windmove(for Mac/Linux)
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+
+;; Command Binding 
+(global-set-key (kbd "C-c a") 'anything)
+(global-set-key (kbd "C-c c") 'compile)
+(global-set-key (kbd "C-c d") 'gud-gdb)
+(global-set-key (kbd "C-c s") 'shell)
+(global-set-key (kbd "C-c g") 'grep-find)
+(global-set-key (kbd "C-c f") 'sticky-buffer-mode)
+(global-set-key (kbd "C-c l") 'linum-mode)
 
 (put 'narrow-to-page 'disabled nil)
+
+
+;;#################################
+;; 使い方のメモ
+;;#################################
+
+;; 複数ファイルの複数行に渡る置換を行う
+;; 1.置換したい対象のファイルを選択する
+;;   >> M-x find-dired
+;;   >> Run find in directory: [you dir]
+;;   >> Run find (with args): -type f -name *.c
+;; 2.Diredで見つかったファイルがリストアップされますので
+;;   Qを押して dired-do-query-replace-regexp を呼び出す
+;;   置換え前文字列と置き換え後文字列を入力する（改行符号：C-q C-j）
+;; 3.変更を保存：M-x ibuffer呼び出し、*uで変更したけど保存していないBuffer
+;;   を選択して、Sで保存、DでそのBufferのKill
 
 
